@@ -23,7 +23,10 @@ int main(int argc, char* argv[]){
 			perror("Error al leer desde stdin\n");
 			exit(EXIT_FAILURE);
 		}
-		write(1, buff, bytes);			//Se escribe en stdout
+		if((write(1, buff, bytes)) == -1){		//Se escribe en stdout y se verifica que no de error
+			perror("Error al escribir en stdout\n");
+			exit(EXIT_FAILURE);
+		}
 		return 0;
 	}
 
@@ -38,7 +41,10 @@ int main(int argc, char* argv[]){
 		//bytes = read(fd, argv[1], 1000);
 		//close(fd);
 		while((bytes = read(fd, buff, 1024)) > 0){
-			write(1, buff, bytes);			//Se escribe en stdout
+			if((write(1, buff, bytes)) == -1){		//se escribe en stdout y se verific que nop hay error
+				perror("Error al escribir en stdout\n");
+				exit(EXIT_FAILURE);
+			}
 		}
 		close(fd);
 	}
